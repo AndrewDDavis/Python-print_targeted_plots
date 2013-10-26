@@ -1,15 +1,41 @@
 # print_targeted_plots.py
 """Make plots suitable for printed publication.
 
-This module contains functions to improve the appearance of 
-matplotlib plots that will appear in print.  The recommended usage is
-to first decide on a font size that suits the figure; for example, 8
-point font for a single-column figure.  Next, run set_ink_weight()
-before creating the figure.  After plotting, use the other convenience
-functions to adjust the figure parameters before calling show() or
-savefig().
+This module contains functions to improve the appearance of  ``matplotlib``
+plots that will appear in print.  The recommended usage is to first decide on
+a font size that suits the figure; for example, 8 point font may be used for a
+single-column figure.  The font size will be passed to the relevant
+convenience functions, which adjust plot features in accordance with it.
 
-Example:
+Next, run ``set_ink_weight()`` before creating the figure.  After plotting,
+use the other convenience functions to adjust the figure parameters before
+calling ``show()`` or ``savefig()``.
+
+Current capabilities of the module
+----------------------------------
+
+**set_ink_weight**
+    Change the rc settings for widths of figure lines, markers, and fonts.
+**adjust_label_padding**
+    Change axes label padding of all axes.
+**adjust_eb_caps**
+    Change errorbar cap widths.
+**adjust_grid_dashes**
+    Change dash spacing of grid lines of all axes.
+**adjust_legends**
+    Change legends to be borderless, but with a background.
+**turn_frame_off**
+    Turn off axes frame box and ticks, but leave background.
+**adjust_boxplot**
+    Change colors of boxplot to be more subtle.  Uses blue and black.
+    Also changes some line weights and dash spacing.
+
+
+Example
+-------
+
+::
+
     import numpy as np
     import matplotlib.pyplot as plt
     import print_targeted_plots as ptp
@@ -43,7 +69,7 @@ Example:
 __version__ = "0.1"
 
 def set_ink_weight(font_size, line_size=None, set_fonts=True, set_lines=True):
-    """Change the rc settings for widths of figure lines and fonts.
+    """Change the rc settings for widths of figure lines, markers, and fonts.
     Call this before the figure is created;  font_size is in points.
 
     Example: set_ink_weight(12)
@@ -78,7 +104,7 @@ def set_ink_weight(font_size, line_size=None, set_fonts=True, set_lines=True):
     #      "    none right now... [?]")
 
 def adjust_label_padding(font_size):
-    """Change axes label padding to match font size for all axes.
+    """Change axes label padding of all axes according to font size.
     Call this after the figure is made.
 
     Example:
@@ -148,7 +174,7 @@ def adjust_legends():
 
 
 def turn_frame_off(ax=None):
-    """Turn off axes frame box and ticks, but leaving background.
+    """Turn off axes frame box and ticks, but leave background.
     Call this after the figure is made.
 
     Example:
@@ -168,7 +194,7 @@ def turn_frame_off(ax=None):
 
 def adjust_boxplot(bp, font_size):
     """Change colors of boxplot to be more subtle.  Uses blue and black.
-    Also changes some weights and dashes according to font_size.
+    Also changes some line weights and dash spacing according to font_size.
 
     Example:
         bp = ax1.boxplot(...)
