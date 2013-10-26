@@ -1,0 +1,7 @@
+# Standard
+.DS_Store
+
+# Unrelated plot files
+
+# Compiled modules
+*.pyc
