@@ -91,14 +91,25 @@ def set_ink_weight(font_size, line_size=None, set_fonts=True, set_lines=True):
 
     # Change marker, tick and line width values to default * factor
     if set_lines:
-        plt.rc('lines', linewidth=line_size, markeredgewidth=0.5*line_size, markersize=6*line_size)
+        plt.rc('lines', linewidth = line_size,
+                        markeredgewidth = 1.25*line_size,
+                        markersize = font_size/1.5)
+                        #dashes=(6*line_size,6*line_size))  # must be set after
         plt.rc('patch', linewidth=line_size)
         plt.rc('axes', linewidth=line_size)
         plt.rc('grid', linewidth=0.5*line_size)
-        plt.rc('xtick.minor', width=0.5*line_size, size=2*line_size, pad=4*line_size)
-        plt.rc('xtick.major', width=0.5*line_size, size=4*line_size, pad=4*line_size)
-        plt.rc('ytick.minor', width=0.5*line_size, size=2*line_size, pad=4*line_size)
-        plt.rc('ytick.major', width=0.5*line_size, size=4*line_size, pad=4*line_size)
+        plt.rc('xtick.minor', width=0.5*line_size,
+                              size=2*line_size,
+                              pad=4*line_size)
+        plt.rc('xtick.major', width=0.5*line_size,
+                              size=4*line_size,
+                              pad=4*line_size)
+        plt.rc('ytick.minor', width=0.5*line_size,
+                              size=2*line_size,
+                              pad=4*line_size)
+        plt.rc('ytick.major', width=0.5*line_size,
+                              size=4*line_size,
+                              pad=4*line_size)
 
     #print("known values not set here [default]:\n" 
     #      "    none right now... [?]")
@@ -172,6 +183,28 @@ def adjust_legends():
         if leg is not None:
             leg.get_frame().set_linewidth(0)
 
+def adjust_line_dashes(font_size):
+    """Change dash spacing of plot lines to match font size for all axes.
+    Call this after the figure is made.
+
+    Example:
+        adjust_line_dashes(12)
+    """
+
+    import matplotlib.pyplot as plt
+
+    adj_factor = font_size/12.
+    dash_ink = (6*adj_factor, 6*adj_factor)
+    #dots_ink = (1*adj_factor, 3*adj_factor)
+
+    fig = plt.gcf()
+    for ax in fig.axes:
+        for l in ax.get_lines():
+            # make sure they're dashed lines first
+            if l.get_drawstyle() == "default" and l.get_linestyle() == '--':
+                l.set_dashes(dash_ink)
+            #if l.get_drawstyle() == "default" and l.get_linestyle() == ':':
+            #    l.set_dashes(dots_ink)
 
 def turn_frame_off(ax=None):
     """Turn off axes frame box and ticks, but leave background.
